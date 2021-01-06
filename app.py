@@ -6,7 +6,7 @@ import os
 
 
 # AUTH0 Config
-AUTH0_CALLBACK_URL = "https://127.0.0.1:8080/"
+AUTH0_CALLBACK_URL = os.environ['AUTH0_CALLBACK_URL']
 AUTH0_CLIENT_ID = os.environ['AUTH0_CLIENT_ID']
 
 # create and configure the app

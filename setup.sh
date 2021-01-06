@@ -2,7 +2,6 @@
 
 # Database URL
 export DATABASE_URL=postgres://zicsx:23321@localhost:5433/capstone
-export ITEMS_PER_PAGE=10
 
 # AUTH0
 export AUTH0_CLIENT_ID=uV2bUfeivPZl2ntqfgGAZG2tRBpYEDl0
