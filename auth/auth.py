@@ -1,15 +1,16 @@
 import json
-from flask import request, _request_ctx_stack
+from flask import request
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
+import os
 
-
-AUTH0_DOMAIN = 'dev-86o6ke3a.us.auth0.com'
+AUTH0_DOMAIN = os.environ["AUTH0_DOMAIN"]
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'caps'
+API_AUDIENCE = os.environ['API_AUDIENCE']
 
 # AuthError Exception
+
 
 class AuthError(Exception):
     def __init__(self, error, status_code):
@@ -45,7 +46,6 @@ def get_token_auth_header():
     return header[1]
 
 
-
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
         raise AuthError({
@@ -59,8 +59,6 @@ def check_permissions(permission, payload):
             'description': 'Permission Not found',
         }, 401)
     return True
-
-
 
 
 def verify_decode_jwt(token):

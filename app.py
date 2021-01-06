@@ -4,9 +4,11 @@ from auth.auth import AUTH0_DOMAIN, API_AUDIENCE, AuthError, requires_auth
 from flask import Flask, request, abort, jsonify, redirect, render_template, abort, jsonify, Response, flash, url_for
 import json
 import os
+
+
 # AUTH0 Config
 AUTH0_CALLBACK_URL = "https://127.0.0.1:8080/"
-AUTH0_CLIENT_ID = "uV2bUfeivPZl2ntqfgGAZG2tRBpYEDl0"
+AUTH0_CLIENT_ID = os.environ['AUTH0_CLIENT_ID']
 
 # create and configure the app
 app = Flask(__name__)

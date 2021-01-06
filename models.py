@@ -1,8 +1,9 @@
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+import os
 
-database_path = "postgres://zicsx:23321@localhost:5433/capstone"
+DATABASE_PATH = os.environ["DATABASE_PATH"]
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -13,8 +14,8 @@ setup_db(app)
 '''
 
 
-def setup_db(app, database_path=database_path):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+def setup_db(app, database_path=DATABASE_PATH):
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_PATH
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
