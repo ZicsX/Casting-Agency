@@ -1,0 +1,200 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.0
+-- Dumped by pg_dump version 13.0
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: actors; Type: TABLE; Schema: public; Owner: zicsx
+--
+
+CREATE TABLE public.actors (
+    id integer NOT NULL,
+    firstname character varying(120) NOT NULL,
+    lastname character varying(120) NOT NULL,
+    age integer NOT NULL,
+    gender character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.actors OWNER TO zicsx;
+
+--
+-- Name: actors_id_seq; Type: SEQUENCE; Schema: public; Owner: zicsx
+--
+
+CREATE SEQUENCE public.actors_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.actors_id_seq OWNER TO zicsx;
+
+--
+-- Name: actors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: zicsx
+--
+
+ALTER SEQUENCE public.actors_id_seq OWNED BY public.actors.id;
+
+
+--
+-- Name: movies; Type: TABLE; Schema: public; Owner: zicsx
+--
+
+CREATE TABLE public.movies (
+    id integer NOT NULL,
+    title character varying(400) NOT NULL,
+    release_date character varying,
+    description character varying
+);
+
+
+ALTER TABLE public.movies OWNER TO zicsx;
+
+--
+-- Name: movies_id_seq; Type: SEQUENCE; Schema: public; Owner: zicsx
+--
+
+CREATE SEQUENCE public.movies_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.movies_id_seq OWNER TO zicsx;
+
+--
+-- Name: movies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: zicsx
+--
+
+ALTER SEQUENCE public.movies_id_seq OWNED BY public.movies.id;
+
+
+--
+-- Name: actors id; Type: DEFAULT; Schema: public; Owner: zicsx
+--
+
+ALTER TABLE ONLY public.actors ALTER COLUMN id SET DEFAULT nextval('public.actors_id_seq'::regclass);
+
+
+--
+-- Name: movies id; Type: DEFAULT; Schema: public; Owner: zicsx
+--
+
+ALTER TABLE ONLY public.movies ALTER COLUMN id SET DEFAULT nextval('public.movies_id_seq'::regclass);
+
+
+--
+-- Data for Name: actors; Type: TABLE DATA; Schema: public; Owner: zicsx
+--
+
+COPY public.actors (id, firstname, lastname, age, gender) FROM stdin;
+1	Fname1	Lname1	1	Male
+2	Fname2	Lname2	2	Male
+3	Fname3	Lname3	3	Male
+4	Fname4	Lname4	4	Male
+5	Fname5	Lname5	5	Male
+6	Fname6	Lname6	6	Female
+7	Fname7	Lname7	7	Female
+8	Fname8	Lname8	8	Female
+9	Fname9	Lname9	9	Female
+10	Fname10	Lname10	10	Female
+11	Fname11	Lname11	11	Male
+12	Fname12	Lname12	12	Male
+13	Fname13	Lname13	13	Male
+14	Fname14	Lname14	14	Male
+15	Fname15	Lname15	15	Male
+16	Fname16	Lname16	16	Female
+17	Fname17	Lname17	17	Female
+18	Fname18	Lname18	18	Female
+19	Fname19	Lname19	19	Female
+20	Fname20	Lname20	20	Female
+\.
+
+
+--
+-- Data for Name: movies; Type: TABLE DATA; Schema: public; Owner: zicsx
+--
+
+COPY public.movies (id, title, release_date, description) FROM stdin;
+1	Apocalypse Now	1979-01-01	Captain Willard is sent to Cambodia on a dangerous mission to assassinate a renegade colonel who has won the trust of a local tribe.
+3	Born on the Fourth of July	1989-01-01	\N
+4	The Shawshank Redemption	1994-01-01	\N
+5	The Deer Hunter	1978-01-01	\N
+6	The Dreamers	2003-01-01	\N
+7	The Godfather	1972-01-01	\N
+8	12 Angry Men	1957-01-01	\N
+9	Inception	2010-01-01	\N
+10	The Green Mile	1999-02-24	\N
+11	Interstellar	2014-10-01	\N
+12	American Beauty	1999-01-02	\N
+13	Stalker	1979-01-01	\N
+2	Full Metal Jacket	1987-01-01	\N
+\.
+
+
+--
+-- Name: actors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: zicsx
+--
+
+SELECT pg_catalog.setval('public.actors_id_seq', 60, true);
+
+
+--
+-- Name: movies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: zicsx
+--
+
+SELECT pg_catalog.setval('public.movies_id_seq', 21, true);
+
+
+--
+-- Name: actors actors_pkey; Type: CONSTRAINT; Schema: public; Owner: zicsx
+--
+
+ALTER TABLE ONLY public.actors
+    ADD CONSTRAINT actors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: movies movies_pkey; Type: CONSTRAINT; Schema: public; Owner: zicsx
+--
+
+ALTER TABLE ONLY public.movies
+    ADD CONSTRAINT movies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: movies movies_title_key; Type: CONSTRAINT; Schema: public; Owner: zicsx
+--
+
+ALTER TABLE ONLY public.movies
+    ADD CONSTRAINT movies_title_key UNIQUE (title);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
