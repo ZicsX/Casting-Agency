@@ -1,10 +1,7 @@
 import unittest
 from app import app
-from models import setup_db, DATABASE_PATH
+from models import setup_db, DATABASE_URL
 import json
-from flask_sqlalchemy import SQLAlchemy
-from models import Actors, Movies
-from flask import Flask
 
 
 ASSISTANT_TOKEN = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjNTdWpGeW9LS1FEQkNBLWFVem1HdyJ9.eyJpc3MiOiJodHRwczovL2Rldi04Nm82a2UzYS51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTUxMjAxMzc3NDQzMjUwODM4NzgiLCJhdWQiOlsiY2FwcyIsImh0dHBzOi8vZGV2LTg2bzZrZTNhLnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2MDk5MTc0OTgsImV4cCI6MTYxMDAwMzg5OCwiYXpwIjoidVYyYlVmZWl2UFpsMm50cWZnR0FaRzJ0UkJwWUVEbDAiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwicGVybWlzc2lvbnMiOlsiZ2V0OmFjdG9yc1x0IiwiZ2V0Om1vdmllcyJdfQ.Sqb5CQylCxxCPO1sjNm0rHFWssNyRuu0WxXj_FOIRi9A6ROEuYCs-9hDM5sGhPz64lmfGWqY1ktwv0_PBxqsJWfbvkG0w-kxFmv6SxWQkrLFnFfKKWQDVHbxfO9QsCMllAnNpGkRrqhTBH0sUAr9eRZg0_pZ45Oh7nBArFMzdpQf01nBg94qI2HMm-jnxHATlsRsnTxjIRZHGBCQOOGq_V8z50JvEQ6CR3Tm6i8wv0tWnrIl3FqyRoQRdXB5FdiRCEeA851cFMnIvv2XVkSaiVD7WkgOO5GdE_u1MwY2yG7zxV-44H6NYGAOYTt7bqTr-gXZwXTMJaqOOoRo2qodNA"
@@ -19,7 +16,7 @@ class CapstoneUnittest(unittest.TestCase):
 
     def setUp(self):
         self.app = app
-        self.database_path = DATABASE_PATH
+        self.database_path = DATABASE_URL
         self.producer = PRODUCER_TOKEN
         self.director = DIRECTOR_TOKEN
         self.assistant = ASSISTANT_TOKEN

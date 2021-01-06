@@ -1,8 +1,7 @@
 from flask_cors import CORS
 from models import setup_db, Actors, Movies
 from auth.auth import AUTH0_DOMAIN, API_AUDIENCE, AuthError, requires_auth
-from flask import Flask, request, abort, jsonify, redirect, render_template, abort, jsonify, Response, flash, url_for
-import json
+from flask import Flask, request, abort, jsonify, redirect, abort, jsonify
 import os
 
 
@@ -34,7 +33,7 @@ def paginate(request, selection):
 # --------Root--------
 @app.route('/')
 def index():
-    return "Udacity Casting Agency (Capstone)"
+    return "Casting Agency (Capstone)"
 
 
 # --------Root_Accept--------
@@ -50,7 +49,7 @@ def index():
 #     }), 200
 
 # --------Authorization--------
-@app.route("/auth")
+@app.route("/login")
 def auth_service():
     url = f'https://{AUTH0_DOMAIN}/authorize' \
         f'?audience={API_AUDIENCE}' \
@@ -160,7 +159,10 @@ def patch_actors(jwt, id):
         actor.lastname = response.get('lastname')
 
     if 'age' in response:
-        actor.age = response.get('age')
+        try:
+            actor.age = response.get('age')
+        except Exception:
+            abort(400)
 
     if 'gender' in response:
         actor.gender = response.get('gender')
@@ -341,7 +343,7 @@ def delete_movies(jwt, id):
 
 # Error Handling
 '''
-Example error handling for AuthError entity
+Error handling for AuthError entity
 '''
 
 
@@ -355,7 +357,7 @@ def auth_error_handler(error):
 
 
 '''
-Example error handling for Bad request
+Error handling for Bad request
 '''
 @app.errorhandler(400)
 def bad_request(error):
@@ -367,7 +369,7 @@ def bad_request(error):
 
 
 '''
-Example error handling for Unauthorized entity
+Error handling for Unauthorized entity
 '''
 @app.errorhandler(401)
 def unauthorized(error):
@@ -379,7 +381,7 @@ def unauthorized(error):
 
 
 '''
-Example error handling for Forbidden entity
+Error handling for Forbidden entity
 '''
 @app.errorhandler(403)
 def forbidden(error):
@@ -391,7 +393,7 @@ def forbidden(error):
 
 
 '''
-Example error handling for Resource_not_found entity
+Error handling for Resource_not_found entity
 '''
 @app.errorhandler(404)
 def not_found(error):
@@ -403,7 +405,19 @@ def not_found(error):
 
 
 '''
-Example error handling for unprocessable entity
+Error handling for Method_not_found entity
+'''
+@app.errorhandler(405)
+def method_not_found(error):
+    return jsonify({
+        'success': False,
+        "error": 405,
+        "message": "Method not found"
+    }), 405
+
+
+'''
+Error handling for unprocessable entity
 '''
 @app.errorhandler(422)
 def unprocessable(error):
@@ -412,6 +426,18 @@ def unprocessable(error):
         "error": 422,
         "message": "unprocessable"
     }), 422
+
+
+'''
+Example error handling for Internal Server error
+'''
+@app.errorhandler(500)
+def server_error(error):
+    return jsonify({
+        'success': False,
+        "error": 500,
+        "message": "Internal Server error"
+    }), 500
 
 
 if __name__ == '__main__':

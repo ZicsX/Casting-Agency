@@ -1,9 +1,9 @@
-from sqlalchemy import Column, String, Integer, create_engine
+from sqlalchemy import Column, String, Integer
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-DATABASE_PATH = os.environ["DATABASE_PATH"]
+DATABASE_URL = os.environ["DATABASE_URL"]
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -14,8 +14,8 @@ setup_db(app)
 '''
 
 
-def setup_db(app, database_path=DATABASE_PATH):
-    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_PATH
+def setup_db(app, database_path=DATABASE_URL):
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
