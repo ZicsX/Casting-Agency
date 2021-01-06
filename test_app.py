@@ -1,6 +1,6 @@
 import unittest
 from app import app
-from models import setup_db, database_path
+from models import setup_db, DATABASE_PATH
 import json
 from flask_sqlalchemy import SQLAlchemy
 from models import Actors, Movies
@@ -19,7 +19,7 @@ class CapstoneUnittest(unittest.TestCase):
 
     def setUp(self):
         self.app = app
-        self.database_path = database_path
+        self.database_path = DATABASE_PATH
         self.producer = PRODUCER_TOKEN
         self.director = DIRECTOR_TOKEN
         self.assistant = ASSISTANT_TOKEN
