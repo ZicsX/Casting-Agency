@@ -128,23 +128,23 @@ class CapstoneUnittest(unittest.TestCase):
     # -----DELETE ACTORS-----
     def test_delete_actors_producer(self):
         response = self.client().delete(
-            HOST+'/actors/1', headers={'Authorization': 'Bearer ' + self.producer})
+            HOST+'/actors/15', headers={'Authorization': 'Bearer ' + self.producer})
 
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
 
     def test_delete_actors_director(self):
-        response = self.client().delete(
-            HOST+'/actors/2', headers={'Authorization': 'Bearer ' + self.director})
+        response = self.client().delete(HOST+'/actors/16', headers={
+            'Authorization': 'Bearer ' + self.director})
 
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(data['success'])
 
     def test_delete_actors_unauthorized(self):
-        response = self.client().delete(
-            HOST+'/actors/3', headers={'Authorization': 'Bearer ' + self.assistant})
+        response = self.client().delete(HOST+'/actors/17', headers={
+            'Authorization': 'Bearer ' + self.assistant})
 
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 401)
