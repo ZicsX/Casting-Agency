@@ -33,7 +33,6 @@ class CapstoneUnittest(unittest.TestCase):
             "gender": "Male"
         }
         self.update_actor = {
-            "lastname": "Nolastname",
             "age": 21,
             "gender": "Male"
         }
@@ -49,6 +48,7 @@ class CapstoneUnittest(unittest.TestCase):
         """Executed after reach test"""
         pass
 
+    # -----GET ACTORS-----
     def test_get_actors(self):
         response = self.client().get('/actors')
         data = json.loads(response.data)
@@ -57,6 +57,7 @@ class CapstoneUnittest(unittest.TestCase):
         self.assertTrue(data['success'])
         self.assertGreaterEqual(len(data['actors']), 0)
 
+    # -----POST ACTORS------
     def test_post_actors_producer(self):
         response = self.client().post('/actors', headers={
             'Authorization': 'Bearer ' + self.producer},
@@ -79,6 +80,149 @@ class CapstoneUnittest(unittest.TestCase):
         response = self.client().post('/actors', headers={
             'Authorization': 'Bearer ' + self.assistant},
             json=self.actor)
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertFalse(data['success'])
+
+    # -----PATCH ACTORS-----
+    def test_patch_actors_producer(self):
+        response = self.client().patch('/actors/3', headers={
+            'Authorization': 'Bearer ' + self.producer},
+            json=self.update_actor)
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+
+    def test_patch_actors_director(self):
+        response = self.client().patch('/actors/4', headers={
+            'Authorization': 'Bearer ' + self.director},
+            json=self.update_actor)
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+
+    def test_patch_actors_unauthorized(self):
+        response = self.client().patch('/actors/5', headers={
+            'Authorization': 'Bearer ' + self.assistant},
+            json=self.update_actor)
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertFalse(data['success'])
+
+    # -----DELETE ACTORS-----
+    def test_delete_actors_producer(self):
+        response = self.client().delete(
+            '/actors/1', headers={'Authorization': 'Bearer ' + self.producer})
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+
+    def test_delete_actors_director(self):
+        response = self.client().delete(
+            '/actors/2', headers={'Authorization': 'Bearer ' + self.director})
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+
+    def test_delete_actors_unauthorized(self):
+        response = self.client().delete(
+            '/actors/3', headers={'Authorization': 'Bearer ' + self.assistant})
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertFalse(data['success'])
+
+    # -----GET MOVIES-----
+    def test_get_movies(self):
+        response = self.client().get('/movies')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertGreaterEqual(len(data['movies']), 0)
+
+    # -----POST MOVIES-----
+    def test_post_movies_producer(self):
+        response = self.client().post('/movies', headers={
+            'Authorization': 'Bearer ' + self.producer},
+            json=self.movie)
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+
+    def test_post_movies_director(self):
+        response = self.client().post('/movies', headers={
+            'Authorization': 'Bearer ' + self.director},
+            json=self.movie)
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertFalse(data['success'])
+
+    def test_post_movies_unauthorized(self):
+        response = self.client().post('/movies', headers={
+            'Authorization': 'Bearer ' + self.assistant},
+            json=self.movie)
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertFalse(data['success'])
+
+    # -----PATCH Movies-----
+    def test_patch_movies_producer(self):
+        response = self.client().patch('/movies/3', headers={
+            'Authorization': 'Bearer ' + self.producer},
+            json=self.update_movie)
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+
+    def test_patch_movies_director(self):
+        response = self.client().patch('/movies/4', headers={
+            'Authorization': 'Bearer ' + self.director},
+            json=self.update_movie)
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+
+    def test_patch_movies_unauthorized(self):
+        response = self.client().patch('/movies/5', headers={
+            'Authorization': 'Bearer ' + self.assistant},
+            json=self.update_movie)
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertFalse(data['success'])
+
+    # -----DELETE MOVIES-----
+    def test_delete_movies_producer(self):
+        response = self.client().delete('/movies/6', headers={
+            'Authorization': 'Bearer ' + self.producer})
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['success'])
+
+    def test_delete_movies_director(self):
+        response = self.client().delete('/movies/7', headers={
+            'Authorization': 'Bearer ' + self.director})
+
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertFalse(data['success'])
+
+    def test_delete_movies_producer(self):
+        response = self.client().delete('/movies/8', headers={
+            'Authorization': 'Bearer ' + self.assistant})
 
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 401)
